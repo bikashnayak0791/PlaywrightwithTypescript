@@ -1,0 +1,36 @@
+# Playwright and Node
+node_modules/
+package-lock.json
+
+# TypeScript
+dist/
+*.tsbuildinfo
+*.js
+*.js.map
+*.d.ts
+
+# Test artifacts
+reports/
+test-results/
+.playwright/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
