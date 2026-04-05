@@ -23,14 +23,13 @@ export class BrowserManager {
       default:
         launcher = chromium;
     }
-
     const launchOptions: LaunchOptions = {
       headless: this.config.headless,
-      args: process.env.DOCKER ? ['--no-sandbox', '--disable-dev-shm-usage'] : [],
+      args: process.env.DOCKER ? ['--no-sandbox', '--disable-dev-shm-usage'] : ['--start-maximized'],
     };
-
+    
     this.browser = await launcher.launch(launchOptions);
-    this.context = await this.browser.newContext();
+    this.context = await this.browser.newContext({ viewport: null });
     this.page = await this.context.newPage();
 
     await this.page.goto(this.config.baseURL);

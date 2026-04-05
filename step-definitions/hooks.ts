@@ -1,5 +1,6 @@
 import { Before, After, setDefaultTimeout } from '@cucumber/cucumber';
-import { Browser, BrowserContext, Page, chromium, firefox, webkit } from '@playwright/test';
+import { Browser, BrowserContext, Page} from '@playwright/test';
+import { BrowserManager } from '../Config/BrowserManager';
 
 setDefaultTimeout(60 * 1000); // 60 seconds timeout
 
@@ -14,44 +15,17 @@ interface CucumberWorld {
   browser: Browser;
   context: BrowserContext;
 }
-
+const BM = new BrowserManager();
 Before(async function(this: CucumberWorld) {
   // Get browser type from environment or use chromium as default
-  const browserType = process.env.BROWSER || 'chromium';
-  
-  let launcher;
-  if (browserType === 'firefox') {
-    launcher = firefox;
-  } else if (browserType === 'webkit') {
-    launcher = webkit;
-  } else {
-    launcher = chromium;
-  }
-
-  // Launch browser
-  browser = await launcher.launch({
-    headless: process.env.HEADLESS !== 'false', // set HEADLESS=false to see browser
-  });
-
-  // Create context and page
-  context = await browser.newContext();
-  page = await context.newPage();
-
-  // Store in World object for step definitions
+  const BM = new BrowserManager();
+  page = await BM.init();
   this.page = page;
-  this.browser = browser;
-  this.context = context;
+  this.browser = BM.getBrowser();
+  this.context = BM.getContext();
 });
 
 After(async function(this: CucumberWorld) {
   // Close browser after each scenario
-  if (page) {
-    await page.close();
-  }
-  if (context) {
-    await context.close();
-  }
-  if (browser) {
-    await browser.close();
-  }
+ BM.close();
 });

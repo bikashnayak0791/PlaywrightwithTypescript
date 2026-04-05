@@ -27,13 +27,7 @@ export default defineConfig({
     navigationTimeout: 30 * 1000,
     storageState: undefined,
   },
-  webServer: {
-    command: 'npm run start',
-    url: 'http://127.0.0.1/auditairface/',
-    reuseExistingServer: !process.env.CI,
-    stdout: 'ignore',
-    stderr: 'pipe',
-  },
+  
   projects: [
     {
       name: 'chromium',

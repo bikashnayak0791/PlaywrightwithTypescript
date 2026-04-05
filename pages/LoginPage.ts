@@ -1,44 +1,22 @@
-import { BasePage } from './BasePage';
+
 import { Page } from '@playwright/test';
 
-export class LoginPage extends BasePage {
-  // Selectors
-  private usernameInput = 'input[name="username"]';
-  private passwordInput = 'input[name="password"]';
-  private loginButton = 'button[type="submit"]';
-  private errorMessage = '.error-message';
+export class LoginPage {
+  private usernameplaceholder = 'Username';
+  private passwordplaceholder = 'Password';
+  private adminradiobutton = "//input[@value='admin']";
+  private submitbutton = '#submit_login';
+  private errorMessage = "//div[@role='alert']";
+  page: Page;
 
   constructor(page: Page) {
-    super(page);
+    this.page = page;
   }
 
-  async navigateToLogin() {
-    await this.goto('/login');
-  }
-
-  async enterUsername(username: string) {
-    await this.fill(this.usernameInput, username);
-  }
-
-  async enterPassword(password: string) {
-    await this.fill(this.passwordInput, password);
-  }
-
-  async clickLoginButton() {
-    await this.click(this.loginButton);
-  }
-
-  async login(username: string, password: string) {
-    await this.enterUsername(username);
-    await this.enterPassword(password);
-    await this.clickLoginButton();
-  }
-
-  async isErrorMessageVisible(): Promise<boolean> {
-    return this.isVisible(this.errorMessage);
-  }
-
-  async getErrorMessage(): Promise<string | null> {
-    return this.getText(this.errorMessage);
+  public async loginapplication(username: string,password: string) {
+    await this.page.getByPlaceholder(this.usernameplaceholder).fill(username);
+    await this.page.getByPlaceholder(this.passwordplaceholder).fill(password);
+    await this.page.locator(this.adminradiobutton).click();
+    await this.page.locator(this.submitbutton).click();
   }
 }

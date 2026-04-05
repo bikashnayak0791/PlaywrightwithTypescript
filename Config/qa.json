@@ -3,5 +3,5 @@
   "browser": "chromium",
   "username": "sumeet.thakur@abstechno.in",
   "password": "Bikash07@",
-  "headless": true
+  "headless": false
 }
