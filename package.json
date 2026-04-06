@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test",
+    "test": "cucumber-js --require-module ts-node/register --require \"step-definitions/**/*.ts\" \"features/**/*.feature\"",
+    "test:playwright": "playwright test",
     "test:debug": "playwright test --debug",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
@@ -15,8 +16,8 @@
     "report": "playwright show-report",
     "cucumber": "cucumber-js",
     "cucumber:debug": "node --inspect-brk node_modules/.bin/cucumber-js",
-    "cucumber:features": "cucumber-js --require-module ts-node/register --require 'step-definitions/**/*.ts' features/**/*.feature",
-    "cucumber:dry-run": "cucumber-js --dry-run --require-module ts-node/register --require 'step-definitions/**/*.ts' features/**/*.feature"
+    "cucumber:features": "cucumber-js --require-module ts-node/register --require \"step-definitions/**/*.ts\" \"features/**/*.feature\"",
+    "cucumber:dry-run": "cucumber-js --dry-run --require-module ts-node/register --require \"step-definitions/**/*.ts\" \"features/**/*.feature\""
   },
   "keywords": [],
   "author": "",

@@ -9,7 +9,7 @@ let dashboardPage: Dashboard;
 
 Given("I am on the login page and enter valid credentials", async function (dataTable: DataTable) {
   loginPage = new LoginPage(this.page);
-  const credentials = dataTable.rowsHash();
+  const [credentials] = dataTable.hashes();
   await loginPage.loginapplication(credentials.Username, credentials.Password);
 });
 
