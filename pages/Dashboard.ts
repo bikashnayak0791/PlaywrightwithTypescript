@@ -9,6 +9,6 @@ export class Dashboard {
     }
     public async verifydashboard(){
         let text = await this.page.locator(this.dashboardheader).innerText();
-        expect(text).toEqual(await DashboardpageTestData.getDashboardpage());
+        await expect(text).toEqual(await DashboardpageTestData.getDashboardpage());
     }
 }

@@ -19,15 +19,12 @@ interface CucumberWorld {
 
 Before(async function(this: CucumberWorld) {
   // Get browser type from environment or use chromium as default
-  const browserManager = new BrowserManager();
-  page = await browserManager.init();
+ page = await BrowserManager.initBrowser();
   this.page = page;
-  this.browser = browserManager.getBrowser();
-  this.context = browserManager.getContext();
-  this.browserManager = browserManager;
+  this.browser = BrowserManager.getBrowser()!;
+  this.context = BrowserManager.getContext()!;
 });
 
 After(async function(this: CucumberWorld) {
-  // Close browser after each scenario
-  await this.browserManager?.close();
+  await BrowserManager.quitDriver();
 });

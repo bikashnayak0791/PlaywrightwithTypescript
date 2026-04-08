@@ -17,7 +17,11 @@
     "cucumber": "cucumber-js",
     "cucumber:debug": "node --inspect-brk node_modules/.bin/cucumber-js",
     "cucumber:features": "cucumber-js --require-module ts-node/register --require \"step-definitions/**/*.ts\" \"features/**/*.feature\"",
-    "cucumber:dry-run": "cucumber-js --dry-run --require-module ts-node/register --require \"step-definitions/**/*.ts\" \"features/**/*.feature\""
+    "cucumber:dry-run": "cucumber-js --dry-run --require-module ts-node/register --require \"step-definitions/**/*.ts\" \"features/**/*.feature\"",
+    "cucumber:smoke": "TAGS=\"@smoke\" npm run cucumber:features",
+    "cucumber:critical": "TAGS=\"@critical\" npm run cucumber:features",
+    "cucumber:smoke-critical": "TAGS=\"@smoke and @critical\" npm run cucumber:features",
+    "cucumber:not-ignore": "TAGS=\"not @ignore\" npm run cucumber:features"
   },
   "keywords": [],
   "author": "",

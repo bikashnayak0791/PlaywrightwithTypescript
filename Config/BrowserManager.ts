@@ -4,13 +4,14 @@ import { EnvConfig, getEnvConfig } from './EnvConfig';
 
 
 export class BrowserManager {
-  private browser!: Browser;
-  private context!: BrowserContext;
-  private page!: Page;
-  private config!: EnvConfig;
+  private static browser: Browser | null = null;
+  private static context: BrowserContext | null = null;
+  private static page: Page | null = null;
+  private static config: EnvConfig | null = null;
 
-  public async init(env: string = 'qa'): Promise<Page> {
-    this.config = getEnvConfig(env);
+  public static async initBrowser(): Promise<Page> {
+    // Load config once
+    this.config = getEnvConfig(process.env.NODE_ENV || 'qa');
 
     let launcher;
     switch (this.config.browser) {
@@ -23,30 +24,48 @@ export class BrowserManager {
       default:
         launcher = chromium;
     }
+
     const launchOptions: LaunchOptions = {
       headless: this.config.headless,
-      args: process.env.DOCKER ? ['--no-sandbox', '--disable-dev-shm-usage'] : ['--start-maximized'],
+      args: process.env.DOCKER
+        ? ['--no-sandbox', '--disable-dev-shm-usage']
+        : ['--start-maximized'],
     };
-    
+
     this.browser = await launcher.launch(launchOptions);
     this.context = await this.browser.newContext({ viewport: null });
-    this.page = await this.context.newPage();
+    await this.context.clearCookies();
 
-    await this.page.goto(this.config.baseURL);
+    this.page = await this.context.newPage();
+    if (this.config.baseURL) {
+      await this.page.goto(this.config.baseURL);
+    }
+
     return this.page;
   }
 
-  public getContext(): BrowserContext {
-    return this.context;
-  }
-
-  public getBrowser(): Browser {
+  // --- Getters ---
+  public static getBrowser(): Browser | null {
     return this.browser;
   }
 
-  public async close(): Promise<void> {
+  public static getContext(): BrowserContext | null {
+    return this.context;
+  }
+
+  public static getPage(): Page | null {
+    return this.page;
+  }
+
+  // --- Close everything ---
+  public static async quitDriver(): Promise<void> {
     if (this.page) await this.page.close();
     if (this.context) await this.context.close();
     if (this.browser) await this.browser.close();
+
+    this.page = null;
+    this.context = null;
+    this.browser = null;
+    this.config = null;
   }
 }

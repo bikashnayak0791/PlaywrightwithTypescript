@@ -6,13 +6,14 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
     ['html', { outputFolder: 'reports/html' }],
     ['json', { outputFile: 'reports/results.json' }],
     ['junit', { outputFile: 'reports/junit.xml' }],
-    ['list']
+    ['list'],
+     ['./step-reporter.ts']
   ],
   timeout: 30 * 1000,
   expect: {
@@ -20,12 +21,12 @@ export default defineConfig({
   },
   use: {
     baseURL: 'http://127.0.0.1/auditairface/',
+    storageState: 'storageState.json',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     actionTimeout: 10 * 1000,
     navigationTimeout: 30 * 1000,
-    storageState: undefined,
   },
   
   projects: [
