@@ -154,4 +154,7 @@ export class LocationPage {
     const rows = await this.page.locator(this.locationavailable).innerText();
     await expect(rows).toContain(searchTerm);
   }
+  public async buttonfunctionalityverification() {
+
+  }
 }

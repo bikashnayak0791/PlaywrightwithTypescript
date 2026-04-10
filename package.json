@@ -14,6 +14,7 @@
     "test:webkit": "playwright test --project=webkit",
     "test:serial": "playwright test --workers=1",
     "report": "playwright show-report",
+    "agent:demo": "npx ts-node playwright-agent-demo.ts",
     "cucumber": "cucumber-js",
     "cucumber:debug": "node --inspect-brk node_modules/.bin/cucumber-js",
     "cucumber:features": "cucumber-js --require-module ts-node/register --require \"step-definitions/**/*.ts\" \"features/**/*.feature\"",
@@ -33,5 +34,8 @@
     "@types/node": "^20.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "playwright-agent": "^0.0.1"
   }
 }

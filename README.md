@@ -41,6 +41,63 @@ A comprehensive Playwright testing framework using TypeScript with Page Object M
 - **Parallel Execution**: Tests run in parallel by default
 - **Retry Logic**: Automatic retry for flaky tests in CI
 - **Behavior-Driven Development**: Write tests in plain English with Cucumber
+- **AI-Powered Automation**: Playwright Agent for natural language browser automation
+
+## Playwright Agent Integration
+
+This framework now includes **Playwright Agent**, an AI-powered browser automation tool that allows you to control the browser using natural language instructions.
+
+### Setup Playwright Agent
+
+1. **Install Dependencies** (already done):
+   ```bash
+   npm install
+   ```
+
+2. **Configure API Key**:
+   - Copy `.env.example` to `.env`
+   - Add your OpenAI API key:
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env`:
+   ```
+   OPENAI_API_KEY=your-openai-api-key-here
+   OPENAI_MODEL=gpt-4
+   ```
+
+3. **Run AI-Powered Demo**:
+   ```bash
+   npm run agent:demo
+   ```
+
+### Using Playwright Agent in Tests
+
+```typescript
+import { PlaywrightAgent } from 'playwright-agent';
+
+const agent = new PlaywrightAgent({
+  page,
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'gpt-4'
+});
+
+// Execute natural language commands
+await agent.execute('Click the login button and enter username "testuser"');
+await agent.execute('Navigate to dashboard and verify welcome message');
+```
+
+The agent can understand and execute complex browser interactions using AI, making test creation more intuitive and reducing boilerplate code.
+
+### Alternative: Playwright MCP Server
+
+For VS Code integration with AI assistants like GitHub Copilot, consider installing the Playwright MCP Server:
+
+```bash
+npm install -g @executeautomation/playwright-mcp-server
+```
+
+This provides AI-assisted test generation and execution through the Model Context Protocol.
 
 ## Setup Instructions
 
@@ -101,6 +158,14 @@ npm run test:serial
 ```bash
 npm run report
 ```
+
+### Playwright Agent Demo
+
+#### Run AI-powered browser automation demo
+```bash
+npm run agent:demo
+```
+*Requires OpenAI API key configured in `.env` file*
 
 ### Cucumber BDD Tests
 

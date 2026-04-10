@@ -21,7 +21,7 @@ export default defineConfig({
   },
   use: {
     baseURL: 'http://127.0.0.1/auditairface/',
-    storageState: 'storageState.json',
+    storageState: undefined,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
